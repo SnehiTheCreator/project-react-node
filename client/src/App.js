@@ -18,7 +18,7 @@ const theme = createMuiTheme({
 })
 
 function getSteps() {
-	return ["Select a car", "Pick a subscription length", "Review"]
+	return ["Information", "Select a car", "Pick a subscription length", "Review"]
 }
 
 
@@ -42,7 +42,7 @@ class App extends Component {
 	}
 	
 	goToReview = () => {
-  	this.setState({activeStep: 2})
+  	this.setState({activeStep: 3})
 	}
 	
 	submitSubscription = (subscription) => (

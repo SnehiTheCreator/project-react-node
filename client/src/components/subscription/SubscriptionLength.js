@@ -61,8 +61,8 @@ class SubscriptionLength extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			subscriptionLength: null,
-			startDate: null
+			subscriptionLength: this.props.subscriptionLength,
+			startDate: this.props.startDate
 		}
 	}
 	

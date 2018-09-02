@@ -39,3 +39,18 @@ A car subscription requires:
 1.  Coding skills
 2.  Knowledge of React, NodeJS
 3.  Ability to learn and apply a new library ([micro](https://github.com/zeit/micro))
+
+
+======
+
+### How to run
+
+1. run `npm start` in each service project directory
+2. run `npm start` in client directory
+
+### Assumptions
+
+- The model of the vehicle. The attributes of a vehicle: vin, make, model, year, mileage, image url.
+- That a subscription was saved to a db
+- Start date is a part of the subscription model
+-
