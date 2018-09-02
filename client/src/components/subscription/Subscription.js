@@ -5,17 +5,18 @@ import PickACar from './PickACar';
 import Review from './Review';
 import SubscriptionLength from './SubscriptionLength';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import {getDateString} from "../../util";
+import {getDateString, STORAGE_KEY } from "../../util";
 import { getPricing } from "../../services";
+
 
 class Subscription extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			firstName: null,
-			lastName: null,
-			email: null,
-			dob: null,
+			firstName: "",
+			lastName: "",
+			email: "",
+			dob: "",
 			vin: null,
 			year: null,
 			make: null,
@@ -24,6 +25,14 @@ class Subscription extends Component {
 			subscriptionLength : null,
 			cost: 1,
 			startDate: getDateString(new Date())
+		}
+	}
+	
+	componentDidMount(){
+		// loading progress from local storage if it exists
+		const jsonState = localStorage.getItem(STORAGE_KEY);
+		if (jsonState) {
+			this.setState(JSON.parse(jsonState))
 		}
 	}
 	
@@ -42,6 +51,10 @@ class Subscription extends Component {
 	
 	updateSubscription = (update, next) => {
 		const newState = {...this.state, ...update};
+		
+		// updating progress in local storage for persistance
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(newState));
+		
 		this.setState(newState, () => {if (next) {this.props.nextStep()}})
 	}
 	
@@ -60,8 +73,8 @@ class Subscription extends Component {
 		let nextCondition = false;
 		switch (this.props.activeStep) {
 			case 0:
-				let emailError = (this.state.email && !this.validEmail());
-	
+				let emailError = !!(this.state.email && !this.validEmail());
+
 				currentStepComponent = (
 					<UserInfo
 						key={UserInfo.name}
@@ -88,7 +101,7 @@ class Subscription extends Component {
 				);
 				
 				//automatically move forward on car selection
-				nextCondition = false;
+				nextCondition = !!(this.state.vin);
 				break;
 			case 2:
 				currentStepComponent = (
@@ -131,7 +144,7 @@ class Subscription extends Component {
 						}
 						{(this.validSubscription() && this.props.activeStep !== 3)  ?
 							<Button color='primary' onClick={this.props.goToReview}>Review</Button> : null}
-						{(this.props.activeStep < 1 && nextCondition) ?
+						{(this.props.activeStep < 3 && nextCondition) ?
 							<Button color='primary' onClick={this.props.nextStep}>Next Step</Button> : null
 						}
 					</div>

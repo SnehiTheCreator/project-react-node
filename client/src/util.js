@@ -4,3 +4,5 @@ export const getDateString = (date) => {
 	const day = date.getDate().toString().length === 1 ? ('0' + date.getDate()) : date.getDate();
 	return `${date.getFullYear()}-${month}-${day}`;
 }
+
+export const STORAGE_KEY = "currentSub";

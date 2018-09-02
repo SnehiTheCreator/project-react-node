@@ -10,12 +10,12 @@ const reviewContainer = {
 
 
 const reviewLabel = {
-	fontSize: 30,
+	fontSize: 23,
 	width: '50%',
 }
 
 const reviewValue = {
-	fontSize: 30,
+	fontSize: 23,
 	width: '50%',
 	display: 'flex',
 	justifyContent: 'flex-end',
@@ -55,6 +55,22 @@ class Review extends Component {
 			<div className='step-component'>
 				<div style={reviewContainer}>
 					<div style={selectContainer}>
+						<div style={reviewRowContainer}>
+							<span style={reviewLabel}>First name:</span>
+							<span style={reviewValue}>{this.props.subscription.firstName}</span>
+						</div>
+						<div style={reviewRowContainer}>
+							<span style={reviewLabel}>Last name:</span>
+							<span style={reviewValue}>{this.props.subscription.lastName}</span>
+						</div>
+						<div style={reviewRowContainer}>
+							<span style={reviewLabel}>Email:</span>
+							<span style={reviewValue}>{this.props.subscription.email}</span>
+						</div>
+						<div style={reviewRowContainer}>
+							<span style={reviewLabel}>DOB:</span>
+							<span style={reviewValue}>{this.props.subscription.dob}</span>
+						</div>
 						<div style={reviewRowContainer}>
 							<span style={reviewLabel}>Make:</span>
 							<span style={reviewValue}>{this.props.subscription.make}</span>

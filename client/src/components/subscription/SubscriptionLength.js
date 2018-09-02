@@ -66,14 +66,21 @@ class SubscriptionLength extends Component {
 		}
 	}
 	
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			subscriptionLength: nextProps.subscriptionLength,
+			startDate: nextProps.startDate
+		})
+	}
+	
 	handleSelectSubLength = (e) => {
 		let subscriptionLength = parseInt(e.target.value);
-		this.setState({subscriptionLength}, this.props.update({subscriptionLength}));
+		this.props.update({subscriptionLength})
 	}
 	
 	handleStartDateSelect = (e) => {
 		let startDate = e.target.value;
-		this.setState({startDate}, this.props.update({startDate}));
+		this.props.update({startDate})
 	}
 	
 	render(){

@@ -32,12 +32,22 @@ class UserInfo extends Component {
 		}
 	}
 	
+	componentWillReceiveProps(nextProps){
+		// updating local state after update sent to parent and passed back down
+		this.setState({
+			firstName: nextProps.firstName,
+			lastName: nextProps.lastName,
+			email: nextProps.email,
+			dob: nextProps.dob
+		})
+	}
+	
 	handleChange = (field) => (
 		(e) => {
 			let value = e.target.value;
 			// might cause latency due to frequent re-rendering of parent but since there a small amount of fields
 			// it should be okay for this case
-			this.setState({[field]: value}, this.props.update({[field]: value}))
+			this.props.update({[field]: value})
 		}
 	)
 	

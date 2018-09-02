@@ -7,6 +7,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Subscription from "./components/subscription/Subscription";
 import Success from "./components/Success";
 import {postSubscription} from "./services";
+import {STORAGE_KEY} from "./util";
 
 const theme = createMuiTheme({
 	palette: {
@@ -32,7 +33,7 @@ class App extends Component {
 	}
 	
 	nextStep = () => {
-  	let activeStep = this.state.activeStep < 2 ? this.state.activeStep + 1 : this.state.activeStep;
+  	let activeStep = this.state.activeStep < 3 ? this.state.activeStep + 1 : this.state.activeStep;
   	this.setState({activeStep});
 	}
 	
@@ -51,6 +52,9 @@ class App extends Component {
 			postSubscription(sub)
 				.then(res => res.json())
 				.then(subscription => {
+					// removing  progress from local storage since subscription has been submitted
+					localStorage.removeItem(STORAGE_KEY)
+					
 					this.setState({subscription})
 				})
 				.catch(err => {
