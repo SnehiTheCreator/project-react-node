@@ -41,7 +41,7 @@ A car subscription requires:
 3.  Ability to learn and apply a new library ([micro](https://github.com/zeit/micro))
 
 
-======
+***
 
 ### How to run
 
