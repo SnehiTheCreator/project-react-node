@@ -55,9 +55,9 @@ A car subscription requires:
 - That a subscription was saved to a db
 - Start date is a part of the subscription model
 - Client and services would share domain in production
-    -added cors handler in services for development
+- added cors handler in services for development
 - client side would be part of larger app
-    -no where to go after success in current iteration based on this assumption
+- no where to go after success in current iteration based on this assumption
 - used flexdrive blue color as primary app color
 
 ### Steps to make production ready
@@ -66,9 +66,9 @@ A car subscription requires:
 - error handling on frontend (i.e. some sort of error page or notification if service fails)
 - loading indicators for services
 - ui improvements
-    -animations more polished (i.e. timing sliding with step maybe, slide from left when going backwards)
-    -add more images, app bar, footer. ui is bare bones right now
-    -more theming for fonts, font sizes, colors, etc.
+-animations more polished (i.e. timing sliding with step maybe, slide from left when going backwards)
+-add more images, app bar, footer. ui is bare bones right now
+-more theming for fonts, font sizes, colors, etc.
 - pagination for vehicles if there are a lot more to choose from
 - maybe persist user progress to db rather than local storage
 - payment system?
@@ -76,12 +76,12 @@ A car subscription requires:
 ### Testing
 
 -Test frontend (most likely Jest since create react app is confogured for it)
-    - test that correct child components render based on current progress and conditions
-    - test that each subcomponent renders the right buttons and values based on progress and conditions
-    - test that parents are updated when changes made in child (i.e. state of parent updated when change made in child)
-    - use mock api calls to see that components render correctly given repsonse form api
+- test that correct child components render based on current progress and conditions
+- test that each subcomponent renders the right buttons and values based on progress and conditions
+- test that parents are updated when changes made in child (i.e. state of parent updated when change made in child)
+- use mock api calls to see that components render correctly given repsonse form api
 
 -Test backend (mocha/chai perhaps)
-    -Test each endpoint using assertions from chai that repsonse from endpoint is correct or correct error is given
+-Test each endpoint using assertions from chai that repsonse from endpoint is correct or correct error is given
      based on request parameters
 
