@@ -4,7 +4,8 @@ import PickACar from './PickACar';
 import Review from './Review';
 import SubscriptionLength from './SubscriptionLength';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import {getDateString} from "../util";
+import {getDateString} from "../../util";
+import { getPricing } from "../../services";
 
 class Subscription extends Component {
 	constructor(props) {
@@ -18,6 +19,19 @@ class Subscription extends Component {
 			subscriptionLength : null,
 			cost: 1,
 			startDate: getDateString(new Date())
+		}
+	}
+	
+	componentWillReceiveProps(nextProps){
+		if (nextProps.activeStep === 2 && (this.state.vin && this.state.subscriptionLength)) {
+			getPricing(this.state.vin, this.state.subscriptionLength)
+				.then(res => res.json())
+				.then(res => {
+					this.setState({cost: res.price})
+				})
+				.catch(err => {
+					console.log('err: ', err);
+				})
 		}
 	}
 	
@@ -35,16 +49,34 @@ class Subscription extends Component {
 		let currentStepComponent = null
 		switch (this.props.activeStep) {
 			case 0:
-				currentStepComponent = <PickACar key={PickACar.name} update={this.updateSubscription}/>;
+				currentStepComponent = (
+					<PickACar
+						key={PickACar.name}
+						update={this.updateSubscription}/>
+				);
 				break;
 			case 1:
-				currentStepComponent = <SubscriptionLength key={SubscriptionLength.name} update={this.updateSubscription}/>
+				currentStepComponent = (
+					<SubscriptionLength
+						key={SubscriptionLength.name}
+						update={this.updateSubscription}/>
+				);
 				break;
 			case 2:
-				currentStepComponent = <Review key={Review.name} update={this.updateSubscription} subscription={{...this.state}} />;
+				currentStepComponent = (
+					<Review
+						key={Review.name}
+						update={this.updateSubscription}
+						subscription={{...this.state}}
+						submitSubscription={this.props.submitSubscription(this.state)} />
+				);
 				break;
 			default:
-				currentStepComponent = <PickACar key={PickACar.name} update={this.updateSubscription}/>;
+				currentStepComponent = (
+					<PickACar
+						key={PickACar.name}
+						update={this.updateSubscription}/>
+				);
 		}
 		
 		return(
@@ -55,7 +87,7 @@ class Subscription extends Component {
 							<Button color='primary' onClick={this.props.previousStep}>Previous Step</Button> : null
 						}
 						{(this.validSubscription() && this.props.activeStep !== 2)  ?
-							<Button color='primary' onClick={() => {this.props.setStep(2)}}>Review</Button> : null}
+							<Button color='primary' onClick={this.props.goToReview}>Review</Button> : null}
 						{(this.props.activeStep < 1 && this.vin) ?
 							<Button color='primary' onClick={this.props.nextStep}>Next Step</Button> : null
 						}

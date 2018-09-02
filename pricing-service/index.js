@@ -1,8 +1,9 @@
-const { send } = require('micro')
-const { router, get } = require('microrouter')
+const { send } = require('micro');
+const { router, get } = require('microrouter');
+const cors = require('micro-cors')()
 
 module.exports = router(
-  get('/', (req, res) => {
+  get('/', cors((req, res) => {
     const vin = req.query.vin
     const subscriptionLength = parseInt(req.query.subscriptionLength, 10)
 
@@ -22,5 +23,5 @@ module.exports = router(
     return {
       price
     }
-  })
+  }))
 )

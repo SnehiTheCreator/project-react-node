@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import './App.css'
 import { MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import Button from '@material-ui/core/Button';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import Subscription from "./components/Subscription";
+import Subscription from "./components/subscription/Subscription";
+import Success from "./components/Success";
+import {postSubscription} from "./services";
 
 const theme = createMuiTheme({
 	palette: {
@@ -26,7 +26,8 @@ class App extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-			activeStep: 0
+			activeStep: 0,
+			subscription: null
 		}
 	}
 	
@@ -40,9 +41,23 @@ class App extends Component {
 		this.setState({activeStep});
 	}
 	
-	setStep = (step) => {
-  	this.setState({activeStep: step})
+	goToReview = () => {
+  	this.setState({activeStep: 2})
 	}
+	
+	submitSubscription = (subscription) => (
+		() => {
+			let sub = {...subscription};
+			postSubscription(sub)
+				.then(res => res.json())
+				.then(subscription => {
+					this.setState({subscription})
+				})
+				.catch(err => {
+					console.log('err: ', err);
+				})
+		}
+	)
 	
 	
   
@@ -53,18 +68,31 @@ class App extends Component {
 				<div className="App">
 					<MuiThemeProvider theme={theme}>
 						<header className="App-header">
-							<h1 className="App-title">Sign Up for a Subscription!</h1>
+							<h1 className="App-title">
+								{this.state.subscription ? "Success!" : "Sign Up for a Subscription!"}
+							</h1>
 						</header>
-						<Stepper activeStep={activeStep}>
-							{steps.map((label, index) => {
-								return (
-									<Step color="primary" key={label}>
-										<StepLabel>{label}</StepLabel>
-									</Step>
-								);
-							})}
-						</Stepper>
-						<Subscription activeStep={activeStep} nextStep={this.nextStep} previousStep={this.previousStep} setStep={this.setStep} />
+
+						{this.state.subscription ?
+							<Success subscription={this.state.subscription}/> :
+							<div>
+								<Stepper activeStep={activeStep}>
+									{steps.map((label, index) => {
+										return (
+											<Step color="primary" key={label}>
+												<StepLabel>{label}</StepLabel>
+											</Step>
+										);
+									})}
+								</Stepper>
+								<Subscription
+									activeStep={activeStep}
+									nextStep={this.nextStep}
+									previousStep={this.previousStep}
+									goToReview={this.goToReview}
+									submitSubscription={this.submitSubscription}/>
+							</div>
+						}
 					</MuiThemeProvider>
 				</div>
     )

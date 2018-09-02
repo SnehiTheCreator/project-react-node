@@ -1,7 +1,6 @@
 
 .App {
     margin: 60px;
-    height: 100%;
 }
 .App-header {
     letter-spacing: .14em;
@@ -11,6 +10,7 @@
 .App-title {
     font-weight: lighter;
     text-align: center;
+    color: #6580A6;
 }
 
 .start {

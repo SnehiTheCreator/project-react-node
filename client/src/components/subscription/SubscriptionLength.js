@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Radio from '@material-ui/core/Radio';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from "@material-ui/core/styles";
-import {getDateString} from "../util";
+import {getDateString} from "../../util";
 
 const subscriptionLengths = [7, 28];
 

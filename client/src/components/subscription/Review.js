@@ -41,8 +41,7 @@ const submitContainer = {
 	display: 'flex',
 	flexDirection: 'column',
 	justifyContent: 'center',
-	fontSize: 50,
-	marginTop: '60px'
+	fontSize: 50
 }
 
 class Review extends Component {
@@ -84,16 +83,17 @@ class Review extends Component {
 						<br/>
 						<div style={reviewRowContainer}>
 							<span style={reviewLabel}>Cost:</span>
-							<span style={reviewValue}>{this.props.subscription.cost}</span>
+							<span style={reviewValue}>{'$' + this.props.subscription.cost}</span>
 						</div>
 					</div>
-					<Button
-						color='primary' children={(
-						<div style={submitContainer}>Submit</div>
-					)}/>
+					<div style={{marginTop: '60px'}}>
+						<Button
+							color='primary'
+							children={(<div style={submitContainer}>Submit</div>)}
+							onClick={this.props.submitSubscription}/>
+					</div>
 				</div>
 			</div>
-			
 		)
 	}
 }

@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "micro": "^9.1.4",
+    "micro-cors": "^0.1.0",
     "microrouter": "^3.1.1",
     "moment": "^2.22.2"
   }
